@@ -14,6 +14,7 @@ function Book(title, author, pages, read) {
 function addBookToLibrary(title, author, pages, read) {
     const book = new Book(title, author, pages, read);
     myLibrary.push(book);
+    displayBookCards();
 }
 
 addBookToLibrary("rod", "rodney mullen", 234, true);
@@ -21,6 +22,7 @@ addBookToLibrary("Kafka On The Shore", "Haruki Murakami", 2456, false);
 
 function displayBookCards() {
     const bookCards = document.getElementById("book-cards");
+    bookCards.innerText = "";
     
     myLibrary.forEach(book => {
         const card = document.createElement("div");
@@ -46,3 +48,17 @@ function displayBookCards() {
 }
 
 displayBookCards()
+
+const newBookForm = document.getElementById("new-book-form");
+const newBookButton = document.getElementById("new-book-button");
+
+newBookButton.addEventListener("click", () => {
+    newBookForm.style.display = newBookForm.style.display === 'none' ? 'block' : 'none';
+});
+
+newBookForm.addEventListener("submit", (event) => {
+    const title = document.getElementById("title").value;
+    const author = document.getElementById("author").value;
+    const pages = document.getElementById("pages").value;
+    const read = document.getElementById("read").value;
+})
