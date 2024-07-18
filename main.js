@@ -17,9 +17,6 @@ function addBookToLibrary(title, author, pages, read) {
     displayBookCards();
 }
 
-addBookToLibrary("rod", "rodney mullen", 234, true);
-addBookToLibrary("Kafka On The Shore", "Haruki Murakami", 2456, false);
-
 function displayBookCards() {
     const bookCards = document.getElementById("book-cards");
     bookCards.innerText = "";
@@ -47,7 +44,7 @@ function displayBookCards() {
     });
 }
 
-displayBookCards()
+// displayBookCards()
 
 const newBookForm = document.getElementById("new-book-form");
 const newBookButton = document.getElementById("new-book-button");
@@ -57,8 +54,14 @@ newBookButton.addEventListener("click", () => {
 });
 
 newBookForm.addEventListener("submit", (event) => {
+    event.preventDefault(); // Prevent default form submission action. (Including page reload)
+
     const title = document.getElementById("title").value;
     const author = document.getElementById("author").value;
     const pages = document.getElementById("pages").value;
     const read = document.getElementById("read").value;
+
+    addBookToLibrary(title, author, pages, read);
 })
+
+document.getElementById("dialog").show();
