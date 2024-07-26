@@ -21,7 +21,7 @@ function displayBookCards() {
     const bookCards = document.getElementById("book-cards");
     bookCards.innerText = "";
     
-    myLibrary.forEach(book => {
+    myLibrary.forEach((book, index) => {
         const card = document.createElement("div");
 
         const title = document.createElement("h2");
@@ -40,21 +40,36 @@ function displayBookCards() {
         read.textContent = book.read;
         card.appendChild(read);
 
+        const removeButton = document.createElement("button");
+        removeButton.textContent = "Remove Book";
+        removeButton.setAttribute("data-index", index);
+        removeButton.addEventListener("click", removeBookFromLibrary);
+        card.appendChild(removeButton);
+
         bookCards.appendChild(card);
     });
 }
 
-// displayBookCards()
+function removeBookFromLibrary(event) {
+    const index = event.target.getAttribute("data-index");
+    myLibrary.splice(index, 1);
+    displayBookCards();
+}
 
-const newBookForm = document.getElementById("new-book-form");
+const dialog = document.getElementById("dialog");
 const newBookButton = document.getElementById("new-book-button");
+const addBookButton = document.getElementById("add-book-button");
 
 newBookButton.addEventListener("click", () => {
-    newBookForm.style.display = newBookForm.style.display === 'none' ? 'block' : 'none';
+    dialog.open ? dialog.close() : dialog.showModal();
 });
 
-newBookForm.addEventListener("submit", (event) => {
-    event.preventDefault(); // Prevent default form submission action. (Including page reload)
+document.getElementById('close-button').addEventListener("click", () => {
+    dialog.close();
+});
+
+addBookButton.addEventListener("click", (event) => {
+    event.preventDefault(); // Prevent default form submission action. (Including page reload upon submission)
 
     const title = document.getElementById("title").value;
     const author = document.getElementById("author").value;
@@ -62,6 +77,8 @@ newBookForm.addEventListener("submit", (event) => {
     const read = document.getElementById("read").value;
 
     addBookToLibrary(title, author, pages, read);
+    dialog.close();
 })
 
-document.getElementById("dialog").show();
+
+
