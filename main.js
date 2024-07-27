@@ -36,8 +36,10 @@ function displayBookCards() {
         pages.textContent = book.pages;
         card.appendChild(pages);
 
-        const read = document.createElement("p");
-        read.textContent = book.read;
+        const read = document.createElement("button");
+        read.textContent = book.read ? "Read" : "Not Read";
+        read.setAttribute("data-index", index);
+        read.addEventListener("click", toggleReadStatus);
         card.appendChild(read);
 
         const removeButton = document.createElement("button");
@@ -48,6 +50,12 @@ function displayBookCards() {
 
         bookCards.appendChild(card);
     });
+}
+
+function toggleReadStatus(event) {
+    const index = event.target.getAttribute("data-index");
+    myLibrary[index].read = !myLibrary[index].read;
+    displayBookCards();
 }
 
 function removeBookFromLibrary(event) {
